@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Result</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+
+    <h1>Performance Analysis</h1>
+
+    {% if correlation %}
+        <p><strong>Correlation:</strong> {{ correlation }}</p>
+    {% endif %}
+
+    <form method="POST" class="graph-selector">
+        <label>
+            <input type="radio" name="graph_type" value="bar"
+            {% if graph_type == "bar" %}checked{% endif %}>
+            Bar Graph
+        </label>
+
+        <label>
+            <input type="radio" name="graph_type" value="line"
+            {% if graph_type == "line" %}checked{% endif %}>
+            Line Graph
+        </label>
+
+        <button type="submit">Update Graph</button>
+    </form>
+
+    {% if graph_file %}
+        <img src="/static/{{ graph_file }}" alt="Performance Graph">
+    {% else %}
+        <p>Add at least two students to generate analysis.</p>
+    {% endif %}
+
+    {% if students %}
+    <h2>Student Details</h2>
+    <table class="student-table">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>Course</th>
+            <th>Study Hours</th>
+            <th>Final Score</th>
+        </tr>
+        {% for s in students %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ s["Name"] }}</td>
+            <td>{{ s["Roll No"] }}</td>
+            <td>{{ s["Course"] }}</td>
+            <td>{{ s["Study Hours"] }}</td>
+            <td>{{ s["Final Score"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <div class="buttons">
+        <a href="/" class="secondary-btn">Back</a>
+        <a href="/reset" class="danger-btn">Reset All</a>
+    </div>
+
+</div>
+</body>
+</html>
